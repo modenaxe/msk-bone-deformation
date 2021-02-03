@@ -3,7 +3,7 @@
 %    Author:   Luca Modenese,  2020                                       %
 %    email:    l.modenese@imperial.ac.uk                                  %
 % ----------------------------------------------------------------------- %
-function osimModel = deformMuscleAttachments(osimModel, aSegmentName, aTorsionAxisString, torsion_angle_func_rad)
+function osimModel = applyTorsionToMuscleAttachments(osimModel, aSegmentName, aTorsionAxisString, torsion_angle_func_rad)
 
 import org.opensim.modeling.*
 
