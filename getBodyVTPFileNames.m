@@ -1,9 +1,14 @@
-function vtpNameSet = getSegVTPFileNames(aOsimModel,aSegmentName)
+function vtpNameSet = getBodyVTPFileNames(aOsimModel,aBodyName)
 
 import org.opensim.modeling.*
 
+% check if body is included in the model
+if aOsimModel.getBodySet().getIndex(aBodyName)<0
+    error('The specified segment is not included in the OpenSim model')
+end
+
 % gets GeometrySet, where the display properties are located
-SegGeometrySet = aOsimModel.getBodySet().get(aSegmentName).getDisplayer().getGeometrySet();
+SegGeometrySet = aOsimModel.getBodySet().get(aBodyName).getDisplayer().getGeometrySet();
 
 % Gets the element of the geometrySet
 N_vtp = SegGeometrySet.getSize();
