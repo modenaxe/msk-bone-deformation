@@ -1,30 +1,33 @@
-% previously Torsion_v3
-
 clear;clc
+
 % import libraries
 import org.opensim.modeling.*
 
 %---------------  MAIN SETTINGS -----------
-% Model and its geometry
-% ModelFileName = 'GC5.osim';%
+% Model to deform
 % ModelFileName = './test_models/gait2392_simbody.osim';
-% ModelFileName = './test_models/Rajagopal2015_right_leg_only.osim';
 modelFileName = './test_models/Rajagopal2015.osim';
-OSGeometry_folder = '.\Geometry';% 
+
+% where the bone geometries are stored
 % OSGeometry_folder = 'C:\OpenSim 3.3\Geometry';
-altered_models_folder = './';
-% body to deform and axis of deformation
-bone_to_deform = 'femur_r';
+OSGeometry_folder = './Geometry';
+
+% body to deform
 bone_to_deform = 'tibia_r';
+
+% axis of deformatio
 torsionAxis = 'y';
-torsion = -40;
 
-TorsionProfilePointsDeg = [ torsion 0   ];
+% define the torsion at the joint centre of the specified bone
+TorsionProfilePointsDeg = [ 40  0 ];
 
+% decide if you want to apply torsion to joint as well as other objects
 apply_torsion_to_joints = 'yes';
-%-------------------------------------------
 
-% deformed_model_name
+% where the deformed models will be saved
+altered_models_folder = './deformed_models';
+%----------------------------------------------
+
 % import model
 osimModel = Model(modelFileName);
 
@@ -56,12 +59,11 @@ osimModel = applyTorsionToMarkers(osimModel, bone_to_deform, torsionAxis, torsio
 osimModel = applyTorsionToVTPBoneGeom(osimModel, bone_to_deform, torsionAxis, torsion_angle_func_rad, torsion_doc_string, OSGeometry_folder);
 
 % save output model
+if ~isfolder(altered_models_folder); mkdir(altered_models_folder); end
 [~, name,ext] = fileparts(modelFileName);
 deformed_model_name = [name, deformed_model_suffix,ext];
 output_model_path = fullfile(altered_models_folder, deformed_model_name);
 osimModel.setName([char(osimModel.getName()),deformed_model_suffix]);
 
 % save model
-saveDeformedModel(osimModel, output_model_path)
-
-
+saveDeformedModel(osimModel, output_model_path);
