@@ -1,3 +1,8 @@
+%-------------------------------------------------------------------------%
+%    Copyright (c) 2021 Modenese L.                                       %
+%    Author:   Luca Modenese,  2021                                       %
+%    email:    l.modenese@imperial.ac.uk                                  %
+% ----------------------------------------------------------------------- %
 function [aRotMat, axis_ind] = getAxisRotMat(aStringAxis)
 
 % uniform the input

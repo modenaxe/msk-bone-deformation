@@ -1,3 +1,9 @@
+%-------------------------------------------------------------------------%
+%    Copyright (c) 2021 Modenese L.                                       %
+%    Author:   Luca Modenese,  2021                                       %
+%    email:    l.modenese@imperial.ac.uk                                  %
+% ----------------------------------------------------------------------- %
+
 function SpatialTransformTrans = computeSpatialTransformTranslations(osimModel, aCustomJoint)
 
 import org.opensim.modeling.*

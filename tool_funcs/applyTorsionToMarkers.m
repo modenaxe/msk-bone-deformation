@@ -1,6 +1,6 @@
 %-------------------------------------------------------------------------%
-% Copyright (c) 2021 Modenese L.                                          %
-%    Author:   Luca Modenese,  2020                                       %
+%    Copyright (c) 2021 Modenese L.                                       %
+%    Author:   Luca Modenese,  2021                                       %
 %    email:    l.modenese@imperial.ac.uk                                  %
 % ----------------------------------------------------------------------- %
 function osimModel = applyTorsionToMarkers(osimModel, aSegmentName, aTorsionAxisString, torsion_angle_func_rad)

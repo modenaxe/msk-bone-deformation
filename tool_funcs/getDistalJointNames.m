@@ -1,3 +1,8 @@
+%-------------------------------------------------------------------------%
+%    Copyright (c) 2021 Modenese L.                                       %
+%    Author:   Luca Modenese,  2021                                       %
+%    email:    l.modenese@imperial.ac.uk                                  %
+% ----------------------------------------------------------------------- %
 % given a body, return all joints of which that body is parent.
 function distalJointSetNames = getDistalJointNames(osimModel, bodyName)
 

@@ -1,3 +1,8 @@
+%-------------------------------------------------------------------------%
+%    Copyright (c) 2021 Modenese L.                                       %
+%    Author:   Luca Modenese,  2021                                       %
+%    email:    l.modenese@imperial.ac.uk                                  %
+% ----------------------------------------------------------------------- %
 % read VTP as a VTK file. No differences wrt easier approach from 2013.
 function [P, C, N] = readVTPfile(aVTKfile, debugplots)
 

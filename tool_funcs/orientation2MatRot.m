@@ -1,8 +1,12 @@
 %-------------------------------------------------------------------------%
-% Copyright (c) 2020 Modenese L.                                          %
-%    Author:   Luca Modenese                                              %
+%    Copyright (c) 2021 Modenese L.                                       %
+%    Author:   Luca Modenese,  2021                                       %
 %    email:    l.modenese@imperial.ac.uk                                  %
 % ----------------------------------------------------------------------- %
+%
+% FUNCTION FROM msk-STAPLE toolbox.
+%
+%-------------------------------------------------------------------------%
 function RotMat = orientation2MatRot(XYZ_orientation)
 % Transforms Euler XYZ body-fixed rotation angles used to express the orientation
 % in OpenSim model in their rotation matrix

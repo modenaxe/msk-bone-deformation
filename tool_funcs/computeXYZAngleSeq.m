@@ -16,6 +16,10 @@
 %  Author:   Luca Modenese, 2020
 %  Copyright 2020 Luca Modenese
 %-------------------------------------------------------------------------%
+%
+% FUNCTION FROM msk-STAPLE toolbox.
+%
+%-------------------------------------------------------------------------%
 function orientation = computeXYZAngleSeq(aRotMat)
 
 % fixed body sequence of angles from rot mat usable for orientation in
