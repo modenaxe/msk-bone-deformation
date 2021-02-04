@@ -60,6 +60,29 @@ osimModel =  assignDeformedVTPFileNamesToBody(osimModel, bone_to_deform, deforme
 end
 
 
+function vtpNameSet = getBodyVTPFileNames(aOsimModel, aBodyName)
+
+import org.opensim.modeling.*
+
+% check if body is included in the model
+if aOsimModel.getBodySet().getIndex(aBodyName)<0
+    error('The specified segment is not included in the OpenSim model')
+end
+
+% gets GeometrySet, where the display properties are located
+bodyGeometrySet = aOsimModel.getBodySet().get(aBodyName).getDisplayer().getGeometrySet();
+
+% Gets the element of the geometrySet
+N_vtp = bodyGeometrySet.getSize();
+
+% Loops and saved the names of the VTP geometry files
+for n_vtp = 0:N_vtp-1
+    cur_geom = bodyGeometrySet.get(n_vtp);
+    vtpNameSet(n_vtp+1) = {char(cur_geom.getGeometryFile())}; %#ok<AGROW>
+end
+
+end
+
 % function to read normals and points contained in a vtp file.
 % points and normal define the geometry of the bone (assuming that topology 
 % doesn't change).

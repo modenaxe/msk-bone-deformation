@@ -1,3 +1,4 @@
+% given a body, return all joints of which that body is parent.
 function distalJointSetNames = getDistalJointNames(osimModel, bodyName)
 
 % extract all joints

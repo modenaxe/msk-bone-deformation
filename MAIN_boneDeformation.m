@@ -1,67 +1,72 @@
 % previously Torsion_v3
 
 clear;clc
-%%%%%%%%  MAIN SETTINGS %%%%%%%%%%%%%%%%%%
-% TO DO set up a generic point to initiate the torsion
-% positive angle
-segment = 'tibia_r';
-TorsionAxis = 'y';
-% TO DO
-% the idea is to have desired torsion at distal joint and then
-% calculate the length using getJontCentreCoord
-TorsionPointsDeg = [0, 30];% degrees
-LengthPoints = [0, 0.42];
-JointAxisTorsion = TorsionPointsDeg(2);
-% Folder settings
-OSGeometry_folder = 'C:\OpenSim 3.1\Geometry';
-ModelFileName = 'gait2392_simbody.osim';
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% % OLD SETUP
-% viapoint = 'yes'; % now default: rotate attachments together with body
-
-% torsion gradient
-TorsionPoints = TorsionPointsDeg/180*pi;
-TorsionGrad = diff(TorsionPoints)/diff(LengthPoints);
-
-% TO DO CHANGE AXIS
-deformed_vtp_suffix = ['_TorsionAxis',TorsionAxis,'Deg',num2str(TorsionPointsDeg(2))];
-
 % import libraries
 import org.opensim.modeling.*
+
+%%%%%%%%  MAIN SETTINGS %%%%%%%%%%%%%%%%%%
+% Model and its geometry
+ModelFileName = 'GC5.osim';%'gait2392_simbody.osim';
+OSGeometry_folder = '.\Geometry';% 'C:\OpenSim 3.3\Geometry';
+
+% body to deform and axis of deformation
+bone_to_deform = 'femur_l';
+torsionAxis = 'y';
+
+% the idea is to have desired torsion at distal joint and then
+% calculate the length using getJontCentreCoord
+% TorsionProfilePointsDeg = [-28, 0];% degrees
+
+% fixing this requires adjustin the distal joint as well
+% TorsionProfilePointsDeg = [0, 50];% degrees
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% for anteversion = +7:-7:-28
+    
+for anteversion = 28:-7:-7
+
+% Degree angles that are linearly interpolated to create the torsion profile.
+% Equivalent LengthProfilePoints will complete this setting.
+TorsionProfilePointsDeg = [anteversion, 0];
+
+disp(['Anteversion angle: ', num2str(anteversion)])
 
 % import model
 osimModel = Model(ModelFileName);
 
-% check if segment is included in the model
-if osimModel.getBodySet().getIndex(segment)<0
-    error('The specified segment is not included in the OpenSim model')
-end
+% get axis indices
+[~, axis_ind] = getAxisRotMat(torsionAxis);
 
-% % get length of the segment
-% osimModel.getBodySet().get(segment)
+% compute bone length
+[Pprox, Pdist, V, total_L] = getBoneLength(osimModel, bone_to_deform);
+
+% define length corresponding to torsion points
+LengthProfilePoints = [ Pprox(axis_ind), Pdist(axis_ind)];
+
+% compute torsion profile
+torsion_angle_func_rad = @(L)torsionProfile(L, LengthProfilePoints, TorsionProfilePointsDeg);
 
 % deforming muscle attachments
-osimModel = deformMuscleAttachments(osimModel,segment, TorsionAxis, TorsionGrad);
+osimModel = deformMuscleAttachments(osimModel, bone_to_deform, torsionAxis, torsion_angle_func_rad);
 
-% Deforming bone geometries
-vtpNameSet = getSegVTPFileNames(osimModel,segment);
-for n_vtp = 1:size(vtpNameSet,2)
-    % current geometry
-    curr_vtp = vtpNameSet{n_vtp};
-    % vtp files with path
-    vtp_file = fullfile(OSGeometry_folder,curr_vtp);
-    % creates the deformed bones in the OpenSim geometry folder
-    deformVTPBoneGeom(vtp_file, TorsionAxis, TorsionGrad,deformed_vtp_suffix)    
+% suffix used for saving geometries
+deformed_vtp_suffix = ['_Torsion',upper(torsionAxis),num2str(TorsionProfilePointsDeg(1)),'Deg'];
+
+% get VTP geometries
+vtpNameSet = getSegVTPFileNames(osimModel, bone_to_deform);
+% deform them
+deformVTPBoneGeom(OSGeometry_folder, vtpNameSet, torsionAxis, torsion_angle_func_rad, deformed_vtp_suffix)  
+% assign new geometries to model
+[osimModel,newNames]= setSegDeformedVTPFileNames(osimModel,bone_to_deform,deformed_vtp_suffix);
+
+% rotate distal joint if required
+% osimModel = rotateDistalJointAxes_v2(osimModel,segment,TorsionAxis, JointAxisTorsion);
+% rotateJointRefSyst(osimModel, 'child', torsionAxis, torsion_angle_func_rad(total_L))
+
+% save output model
+[path, name, ext] = fileparts(ModelFileName);
+antev = ['femAntev',num2str(12+TorsionProfilePointsDeg(1)),'Deg'];
+outputModelFile = fullfile(path,[name,'_',antev, '.osim']);
+osimModel.setName(['Rajagopal2015_',antev]);
+osimModel.print(outputModelFile);
 end
-
-% updates the model so that it uses the new geometries
-[osimModel,newNames]= setSegDeformedVTPFileNames(osimModel,segment,deformed_vtp_suffix);
-
-% rotate distal joint
-osimModel = rotateDistalJointAxes(osimModel,segment,TorsionAxis, JointAxisTorsion);
-
-% sets output model
-[path,name,ext] = fileparts(ModelFileName);
-OutputModel = fullfile(path,[name,deformed_vtp_suffix,segment,'.osim']);
-osimModel.print(OutputModel);
