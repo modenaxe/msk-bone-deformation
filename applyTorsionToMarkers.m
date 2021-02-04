@@ -12,6 +12,10 @@ if osimModel.getBodySet().getIndex(aSegmentName)<0
     error('The specified segment is not included in the OpenSim model')
 end
 
+disp('-------------------');
+disp(' ADJUSTING MARKERS ');
+disp('-------------------');
+
 % converting the axis in the index used later
 [RotMat, axis_ind] = getAxisRotMat(aTorsionAxisString);
 
@@ -30,6 +34,8 @@ for n_marker = 0:N_markers-1
         
         if strcmp(attachBodyName, aSegmentName)
             
+            disp(['processing ', char(curr_marker.getName())]);
+            
             % point coordinates
             markerLocVec3 =  curr_marker.getOffset();
             
@@ -46,7 +52,7 @@ for n_marker = 0:N_markers-1
             newOffset = Vec3(new_markerLocCoords(1), new_markerLocCoords(2), new_markerLocCoords(3));
             
             % setting the torsioned marker offset
-            curr_marker.setOffset(newOffset)
+            curr_marker.setOffset(newOffset);
         end
 end
 
