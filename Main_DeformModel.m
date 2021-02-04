@@ -32,7 +32,7 @@ TorsionProfilePointsDeg = [ 40  0 ];
 % leg with regular alignment.
 % Choose yes for modelling a CP child with deformation of bone resulting in
 % joint rotation.
-apply_torsion_to_joints = 'no';
+apply_torsion_to_joints = 'yes';
 
 % where the deformed models will be saved
 altered_models_folder = '.';
