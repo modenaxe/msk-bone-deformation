@@ -10,6 +10,10 @@ import org.opensim.modeling.*
 % default: deform viapoints (legacy option)
 deformViapoint = 'yes';
 
+disp('------------------------------');
+disp(' ADJUSTING MUSCLE ATTACHMENTS ');
+disp('------------------------------');
+
 % check if segment is included in the model
 if osimModel.getBodySet().getIndex(aSegmentName)<0
     error('The specified segment is not included in the OpenSim model')
@@ -21,7 +25,8 @@ end
 % extracting muscleset
 Muscles = osimModel.getMuscles();
 N_mus = Muscles.getSize();
-
+processed_muscles = '';
+ntm = 1;
 % loop through the muscles
 for n_mus = 0:N_mus-1
     
@@ -47,6 +52,13 @@ for n_mus = 0:N_mus-1
         
         if strcmp(attachBodyName, aSegmentName)
             
+%             disp(['processing', char(curr_Mus.getName())]);
+            
+            % keep track 
+            if max(strcmp(char(curr_Mus.getName()), processed_muscles))==0
+                processed_muscles{ntm} = char(curr_Mus.getName());
+                ntm = ntm + 1;
+            end
             % point coordinates
             musAttachLocVec3 =  currentPathPointSet.get(n_p).getLocation();
             
@@ -67,3 +79,15 @@ for n_mus = 0:N_mus-1
     end
 end
 
+disp(['Processed ', num2str(ntm-1), ' muscles:'])
+print_str = '';
+for nd = 1:length(processed_muscles)
+   if mod(nd, round((ntm-1)/2))==0
+        disp(print_str);
+        print_str = '';
+   end
+    print_str = [print_str, processed_muscles{nd}, '   '];
+end
+% remaining muscles
+print_str = [print_str, processed_muscles{nd}, '   '];
+end
