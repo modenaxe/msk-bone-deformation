@@ -54,7 +54,7 @@ for n_vtp = 1:size(vtpNameSet,2)
     end
     
     % writes the deformed geometry
-    deformed_vtp_suffix   = ['_Torsion',torsion_doc_string];
+    deformed_vtp_suffix   = ['_Torsion',upper(torsionAxis),torsion_doc_string];
     disp('   - writing deformed VTP file');
     writeDeformedVTPGeometry(vtp_file, new_normals, new_points, deformed_vtp_suffix)
    
