@@ -3,7 +3,8 @@
 %    Author:   Luca Modenese,  2021                                       %
 %    email:    l.modenese@imperial.ac.uk                                  %
 % ----------------------------------------------------------------------- %
-
+% function to deform the vtp bone geometries according to the specified
+% torsional profile.
 function osimModel = applyTorsionToVTPBoneGeom(osimModel, bone_to_deform, torsionAxis, torsion_angle_func_rad, torsion_doc_string, OSGeometry_folder)
 
 % assign by default OpenSim 3.1 folder
