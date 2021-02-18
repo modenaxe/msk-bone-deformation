@@ -1,4 +1,4 @@
-## Table of contents <!-- omit in toc -->
+# Table of contents <!-- omit in toc -->
 
 - [Bone deformation tool](#bone-deformation-tool)
 - [Requirements and setup](#requirements-and-setup)
