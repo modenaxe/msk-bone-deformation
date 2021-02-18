@@ -1,3 +1,13 @@
+## Table of contents <!-- omit in toc -->
+
+- [Bone deformation tool](#bone-deformation-tool)
+- [Requirements and setup](#requirements-and-setup)
+- [Examples of use](#examples-of-use)
+  - [Femoral anteversion](#femoral-anteversion)
+  - [Femoral torsion](#femoral-torsion)
+  - [Tibial torsion](#tibial-torsion)
+- [Future work](#future-work)
+
 # Bone deformation tool
 
 This repository is used for sharing a MATLAB toolbox that enables researcher in biomechanics to modify their generic musculoskeletal models by applying arbitrary torsion profiles to the long axis of the bone model.
@@ -15,15 +25,25 @@ In order to use the bone deformation tool you will need to:
 
 ## Femoral anteversion
 
-It is possible to modify the femoral anteversion of a generic model
+It is possible to modify the femoral anteversion of a generic model as in the figure below.
+The typical setting would be:
+
 
 ![femoral_anteversion](/images/femoral_anteversion_example.png)
 
 ## Femoral torsion
+
+The typical setting would be:
 
 
 ![femoral_torsion](/images/femoral_torsion_example.png)
 
 ## Tibial torsion
 
+The typical setting would be:
+
 ![distal_torsion](/images/tibial_torsion_example.png)
+
+# Future work
+
+* Upgrade scripts to openSim 4.x.
