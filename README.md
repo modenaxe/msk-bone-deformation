@@ -13,6 +13,8 @@ In order to use the bone deformation tool you will need to:
 
 # Examples of use
 
-## femoral anteversion
+## Femoral anteversion
+
+It is possible to modify the femoral anteversion of a generic model
 
 ![femoral_anteversion](/images/femoral_anteversion_example.png)
