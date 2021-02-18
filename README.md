@@ -26,7 +26,7 @@ The tool is introduced and described in the following publication, which we invi
   keywords = {Anteversion, Musculoskeletal modeling, Tibiofemoral contact force, Knee Loading, Femur, Walking}
 }
 ```
-The paper is available [as preprint]([/preprint](https://github.com/modenaxe/femoral_anteversion_paper/tree/main/preprint)), and all the materials used in that manuscript are available at [this repository](https://github.com/modenaxe/femoral_anteversion_paper).
+The paper is available [as preprint](https://github.com/modenaxe/femoral_anteversion_paper/tree/main/preprint), and all the materials used in that manuscript are available at [this repository](https://github.com/modenaxe/femoral_anteversion_paper).
 
 # Requirements and setup
 
