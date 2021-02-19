@@ -3,6 +3,7 @@
 - [Bone deformation tool](#bone-deformation-tool)
 - [Requirements and setup](#requirements-and-setup)
 - [Examples of use](#examples-of-use)
+  - [Which models can I deform with this MATLAB tool?](#which-models-can-i-deform-with-this-matlab-tool)
   - [Femoral anteversion](#femoral-anteversion)
   - [Femoral torsion](#femoral-torsion)
   - [Tibial torsion](#tibial-torsion)
@@ -36,6 +37,12 @@ In order to use the bone deformation tool you will need to:
 3. set up the OpenSim 3.3 API (Application User Interface) for MATLAB. Please refer to the OpenSim [documentation](https://simtk-confluence.stanford.edu/display/OpenSim/Scripting+with+Matlab).
 
 # Examples of use
+
+## Which models can I deform with this MATLAB tool?
+
+We tested the MATLAB tool with two lower limb models for now: the `gait2392` model distributed with OpenSim and the full-body model published by [Rajagopal et al. (2016)](https://doi.org/10.1109/tbme.2016.2586891). The latter model was used in the publication associated with this repository and to produce the images in this document.
+
+The formulation of the tool is however generic, so nothing prevents you from testing it on other bones and models.
 
 ## Femoral anteversion
 
