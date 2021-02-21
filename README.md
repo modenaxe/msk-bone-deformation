@@ -2,6 +2,8 @@
 
 - [Bone deformation tool](#bone-deformation-tool)
 - [Requirements and setup](#requirements-and-setup)
+- [How to use the bone deformation tool](#how-to-use-the-bone-deformation-tool)
+- [How the bone deformation tool works](#how-the-bone-deformation-tool-works)
 - [Examples of use](#examples-of-use)
   - [Which models can I deform with this MATLAB tool?](#which-models-can-i-deform-with-this-matlab-tool)
   - [Femoral anteversion](#femoral-anteversion)
@@ -11,7 +13,7 @@
 
 # Bone deformation tool
 
-This repository is used for sharing a MATLAB toolbox that enables researcher in biomechanics to modify their generic musculoskeletal models by applying arbitrary torsion profiles to the long axis of the bone model.
+This repository is used for sharing a MATLAB toolbox that enables researcher in biomechanics to modify their generic musculoskeletal models by applying arbitrary torsional profiles to the long axis of the bone model.
 
 The MATLAB tool works with musculoskeletal models in the format provided for the software for biomechanical analyses [OpenSim](https://opensim.stanford.edu/).
 
@@ -35,6 +37,25 @@ In order to use the bone deformation tool you will need to:
 1. download [OpenSim 3.3](https://simtk.org/projects/opensim). Go to the `Download` page of the provided link and click on `Previous releases`, as shown in [this screenshot](https://github.com/modenaxe/3d-muscles/blob/master/images/get_osim3.3.PNG).
 2. have MATLAB installed in your machine. The development of the paper was done using R2020a.
 3. set up the OpenSim 3.3 API (Application User Interface) for MATLAB. Please refer to the OpenSim [documentation](https://simtk-confluence.stanford.edu/display/OpenSim/Scripting+with+Matlab).
+
+# How to use the bone deformation tool
+
+In order to run the bone deformation tool you will need to specify:
+1. where the OpenSim bone geometries are stored (variable `OpenSim_Geometry_folder`)
+2. which segment of the OpenSim model you want to deform (variable `bone_to_deform`)
+3. along which axis the torsional profile will be applied(variable `torsionAxis`)
+4. the points defining the torsional profile, i.e. the torsion applied to the proximal and distal joint centres (variable `TorsionProfilePointsDeg`)
+5. if you want the torsional to be applied just to the bone or also to the joints, i.e. if you want the kinematic model to be altered by the torsion (variable `apply_torsion_to_joints`)
+6. where the resulting model will be saved (variable `altered_models_folder`)
+
+# How the bone deformation tool works
+
+The bone deformation tool will execute the following operations:
+1. modify the bone geometry described in the OpenSim `vtp` file according to the specified linear torsional profile
+2. generate a new bone geometry in `vtp` format
+3. adjust all the muscle attachments and virtual markers attached to the bone
+4. rotate the joints according to the specified torsional profile if the user decides to do that (see examples below). 
+5. generate a new model that includes all the previous modifications.
 
 # Examples of use
 
