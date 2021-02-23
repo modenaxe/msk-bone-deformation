@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/269616182.svg)](https://zenodo.org/badge/latestdoi/269616182)
+
 # Table of contents <!-- omit in toc -->
 
 - [Bone deformation tool](#bone-deformation-tool)
