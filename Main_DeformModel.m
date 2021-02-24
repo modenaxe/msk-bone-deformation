@@ -15,7 +15,7 @@ modelFileName = './test_models/Rajagopal2015.osim';
 
 % where the bone geometries are stored
 % OSGeometry_folder = 'C:\OpenSim 3.3\Geometry';
-OSGeometry_folder = './Geometry';
+OpenSim_Geometry_folder = './Geometry';
 
 % body to deform
 bone_to_deform = 'femur_r';
@@ -66,7 +66,7 @@ osimModel = applyTorsionToMuscleAttachments(osimModel, bone_to_deform, torsionAx
 osimModel = applyTorsionToMarkers(osimModel, bone_to_deform, torsionAxis, torsion_angle_func_rad);
 
 % deform the bone geometries of the generic model
-osimModel = applyTorsionToVTPBoneGeom(osimModel, bone_to_deform, torsionAxis, torsion_angle_func_rad, torsion_doc_string, OSGeometry_folder);
+osimModel = applyTorsionToVTPBoneGeom(osimModel, bone_to_deform, torsionAxis, torsion_angle_func_rad, torsion_doc_string, OpenSim_Geometry_folder);
 
 % save output model
 if ~isfolder(altered_models_folder); mkdir(altered_models_folder); end
