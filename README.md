@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/269616182.svg)](https://zenodo.org/badge/latestdoi/269616182)
+
 # Table of contents <!-- omit in toc -->
 
 - [Bone deformation tool](#bone-deformation-tool)
@@ -29,7 +31,7 @@ The tool is introduced and described in the following publication, which we invi
   keywords = {Anteversion, Musculoskeletal modeling, Tibiofemoral contact force, Knee Loading, Femur, Walking}
 }
 ```
-The paper is available [as preprint](https://github.com/modenaxe/femoral_anteversion_paper/tree/main/preprint), and all the materials used in that manuscript are available at [this repository](https://github.com/modenaxe/femoral_anteversion_paper).
+The paper is available [as preprint](https://biorxiv.org/cgi/content/short/2021.02.22.432159v1), and all the materials used in that manuscript are available at [this repository](https://github.com/modenaxe/femoral_anteversion_paper).
 
 # Requirements and setup
 
