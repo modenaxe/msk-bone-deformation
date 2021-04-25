@@ -1,4 +1,5 @@
 [![DOI](https://zenodo.org/badge/269616182.svg)](https://zenodo.org/badge/latestdoi/269616182)
+![visitors](https://visitor-badge.glitch.me/badge?page_id=modenaxe.msk-STAPLE)<!-- omit in toc -->
 
 # Table of contents <!-- omit in toc -->
 
