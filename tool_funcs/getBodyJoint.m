@@ -14,7 +14,7 @@ import org.opensim.modeling.*;
 if nargin<3; debug_printout=0; end
 
 % check if body is included in the model
-if aOsimModel.getBodySet().getIndex(aBodyName)<0
+if osimModel.getBodySet().getIndex(aBodyName)<0
     error(['getBodyJoint.m The specified body ', aBodyName,' is not included in the OpenSim model'])
 end
 
