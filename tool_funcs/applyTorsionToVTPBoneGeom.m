@@ -63,7 +63,6 @@ end
 
 % assign to model
 osimModel =  assignDeformedVTPFileNamesToBody(osimModel, bone_to_deform, deformed_vtp_suffix);
-
 end
 
 
@@ -76,16 +75,29 @@ if aOsimModel.getBodySet().getIndex(aBodyName)<0
     error('The specified segment is not included in the OpenSim model')
 end
 
-% gets GeometrySet, where the display properties are located
-bodyGeometrySet = aOsimModel.getBodySet().get(aBodyName).getDisplayer().getGeometrySet();
-
-% Gets the element of the geometrySet
-N_vtp = bodyGeometrySet.getSize();
-
-% Loops and saved the names of the VTP geometry files
-for n_vtp = 0:N_vtp-1
-    cur_geom = bodyGeometrySet.get(n_vtp);
-    vtpNameSet(n_vtp+1) = {char(cur_geom.getGeometryFile())}; %#ok<AGROW>
+% OpenSim 3.3
+if getOpenSimVersion()<4.0
+    % gets GeometrySet, where the display properties are located
+    bodyGeometrySet = aOsimModel.getBodySet().get(aBodyName).getDisplayer().getGeometrySet();
+    % Gets the element of the geometrySet
+    N_vtp = bodyGeometrySet.getSize();
+    % Loops and saved the names of the VTP geometry files
+    for n_vtp = 0:N_vtp-1
+        cur_geom = bodyGeometrySet.get(n_vtp);
+        vtpNameSet(n_vtp+1) = {char(cur_geom.getGeometryFile())}; %#ok<AGROW>
+    end
+    
+else
+    body = aOsimModel.getBodySet().get(aBodyName);
+    % get number of meshes
+    N_vtp = body.getPropertyByName('attached_geometry').size();
+    for n_vtp = 0:N_vtp-1 % here no -1
+        cur_geom = body.get_attached_geometry(n_vtp);
+        % transform to Mesh
+        currentMesh = Mesh.safeDownCast(cur_geom);
+        % extract file
+        vtpNameSet(n_vtp+1) = {char(currentMesh.get_mesh_file())}; %#ok<AGROW>
+    end
 end
 
 end
@@ -220,25 +232,60 @@ if aOsimModel.getBodySet().getIndex(aBodyName)<0
     error('The specified segment is not included in the OpenSim model')
 end
 
-% gets GeometrySet, where the display properties are located
-bodyGeometrySet = aOsimModel.getBodySet().get(aBodyName).getDisplayer().getGeometrySet();
+% OpenSim 3.3
+if getOpenSimVersion()<4.0
+    % gets GeometrySet, where the display properties are located
+    bodyGeometrySet = aOsimModel.getBodySet().get(aBodyName).getDisplayer().getGeometrySet();
+    
+    % Gets the element of the geometrySet
+    N_vtp = bodyGeometrySet.getSize();
+    
+    % Loops and updates the names of the VTP geometry files
+    for n_vtp = 0:N_vtp-1
+        cur_geom = bodyGeometrySet.get(n_vtp);
+        % original name
+        origName = char(cur_geom.getGeometryFile());
+        % update the vtp file name
+        updVTPName = [origName(1:end-4),suffix,'.vtp'];
+        % sets new file name for Geometry
+        cur_geom.setGeometryFile(updVTPName);
+        % stores name
+        newVTPNames(n_vtp+1) = {updVTPName};
+        % clear
+        clear origName  newName
+    end
+    
+else
+    body = aOsimModel.getBodySet().get(aBodyName);
+    % get number of meshes
+    N_vtp = body.getPropertyByName('attached_geometry').size();
+    
+    % Loops and updates the names of the VTP geometry files
+    for n_vtp = 0:N_vtp-1
+        
+        cur_geom = body.get_attached_geometry(n_vtp);
+        
+        % transform to Mesh
+        currentMesh = Mesh.safeDownCast(cur_geom);
+        
+        % original name
+        origName = char(currentMesh.get_mesh_file());
 
-% Gets the element of the geometrySet
-N_vtp = bodyGeometrySet.getSize();
-
-% Loops and updates the names of the VTP geometry files
-for n_vtp = 0:N_vtp-1
-    cur_geom = bodyGeometrySet.get(n_vtp);
-    % original name
-    origName = char(cur_geom.getGeometryFile());
-    % update the vtp file name
-    updVTPName = [origName(1:end-4),suffix,'.vtp'];
-    % sets new file name for Geometry
-    cur_geom.setGeometryFile(updVTPName);
-    % stores name
-    newVTPNames(n_vtp+1) = {updVTPName};  
-    % clear
-    clear origName  newName
+        % update the vtp file name
+        updVTPName = [origName(1:end-4),suffix,'.vtp'];
+        
+        % sets new file name for Geometry
+        currentMesh.set_mesh_file(updVTPName);
+        
+        % stores name
+        newVTPNames(n_vtp+1) = {updVTPName};
+        
+        % clear
+        clear origName  newName
+    end
+    
+    
 end
+
 
 end

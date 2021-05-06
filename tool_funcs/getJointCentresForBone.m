@@ -20,10 +20,16 @@ si = osimModel.initSystem();
 
 %% get proximal joint centre 
 % body joint extraction
-proxJoint = cur_body.getJoint();
-
-% location in child
-prox_loc = cur_body.getJoint().get_location;
+if getOpenSimVersion()<4.0
+    % OpenSim 3.3
+    proxJoint = cur_body.getJoint();
+    % location in child
+    prox_loc = cur_body.getJoint().get_location;
+else
+    % OpenSim 4.x
+    proxJoint = getBodyJoint(osimModel, bone_to_deform, 1);
+    prox_loc = proxJoint.get_frames(1).get_translation();
+end
 
 % transform in MATLAB vectors
 prox_P = [prox_loc.get(0), prox_loc.get(1), prox_loc.get(2)];
@@ -41,7 +47,13 @@ for nj = 1:length(jointNameSet)
     distJoint = osimModel.getJointSet().get(cur_joint_name);
     
     % location in parent
-    dist_loc = distJoint.get_location_in_parent;
+    % OpenSim 3.3
+    if getOpenSimVersion()<4.0 
+        dist_loc = distJoint.get_location_in_parent;
+    else
+        % OpenSim 4.x
+        dist_loc = distJoint.get_frames(0).get_translation();
+    end 
     
     % offset from the spatial transform (in local body)
     % take into account the spatialTransform

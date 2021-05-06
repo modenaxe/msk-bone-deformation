@@ -15,15 +15,25 @@ disp(' ADJUSTING JOINTS ');
 disp('------------------');
 
 %% rotate the proximal joint
-proxJoint = osimModel.getBodySet.get(bone_to_deform).getJoint();
-
-% initialise orientation and location (in body of interest)
-orientation = Vec3(0);
-location    = Vec3(0);
-
-% extract joint params
-proxJoint.getOrientation(orientation);
-proxJoint.getLocation(location);
+% OpenSim 3.3
+if getOpenSimVersion()<4.0
+    proxJoint = osimModel.getBodySet.get(bone_to_deform).getJoint();
+    
+    % initialise orientation and location (in body of interest)
+    orientation = Vec3(0);
+    location    = Vec3(0);
+    
+    % extract proximal joint params
+    proxJoint.getOrientation(orientation);
+    proxJoint.getLocation(location);
+else
+    % OpenSim 4.x
+    proxJoint = getBodyJoint(osimModel, bone_to_deform, 0);
+    
+    % extract proximal joint params
+    location    = proxJoint.get_frames(1).get_translation();
+    orientation = proxJoint.get_frames(1).get_orientation();
+end
 
 disp(['* ', char(proxJoint.getName()), ' (', char(proxJoint.getConcreteClassName()),')']);
 disp(['  ', bone_to_deform, ' is CHILD.'])
@@ -51,8 +61,15 @@ new_Orientation  = computeXYZAngleSeq(newJointRotMat);
 newOrientation = Vec3(new_Orientation(1), new_Orientation(2), new_Orientation(3));
 
 % assign params
-proxJoint.setOrientation(newOrientation);
-proxJoint.setLocation(newLocation)
+% OpenSim 3.3
+if getOpenSimVersion()<4.0
+    proxJoint.setOrientation(newOrientation);
+    proxJoint.setLocation(newLocation)
+else
+    % OpenSim 4.x
+    proxJoint.get_frames(1).set_orientation(newOrientation);
+    proxJoint.get_frames(1).set_translation(newLocation);
+end
 
 %% update distal joints
 jointNameSet = getDistalJointNames(osimModel, bone_to_deform);
@@ -69,8 +86,13 @@ for nj = 1:length(jointNameSet)
     curDistJoint = osimModel.getJointSet.get(cur_joint_name);
     
     % extract joint params
-    curDistJoint.getOrientationInParent(orientation);
-    curDistJoint.getLocationInParent(location);
+    if getOpenSimVersion()<4.0
+        curDistJoint.getOrientationInParent(orientation);
+        curDistJoint.getLocationInParent(location);
+    else
+        orientation = curDistJoint.get_frames(0).get_orientation();
+        location    = curDistJoint.get_frames(0).get_translation();
+    end
     
     disp(['* ', cur_joint_name, ' (', char(curDistJoint.getConcreteClassName()),')']);
     disp(['  ', bone_to_deform, ' is PARENT.'])
@@ -110,8 +132,13 @@ for nj = 1:length(jointNameSet)
     newOrientationInParent = Vec3(new_OrientationInPar(1), new_OrientationInPar(2), new_OrientationInPar(3));
     
     % assign new parameters
-    curDistJoint.setOrientationInParent(newOrientationInParent);
-    curDistJoint.setLocationInParent(newLocationInParent)
+    if getOpenSimVersion()<4.0
+        curDistJoint.setOrientationInParent(newOrientationInParent);
+        curDistJoint.setLocationInParent(newLocationInParent)
+    else
+        curDistJoint.get_frames(0).set_orientation(newOrientationInParent);
+        curDistJoint.get_frames(0).set_translation(newLocationInParent);
+    end
 end
 
 end

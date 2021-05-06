@@ -30,14 +30,22 @@ for n_marker = 0:N_markers-1
     curr_marker = markers.get(n_marker);
         
         % Body attached to each point of the PathPointSet
-        attachBodyName = char(curr_marker.getBodyName());
+        if getOpenSimVersion()<4.0 %OpenSim 3.3
+            attachBodyName = char(curr_marker.getBodyName());
+        else %OpenSim 4.x
+            attachBodyName = char(curr_marker.getParentFrame().getName());
+        end
         
         if strcmp(attachBodyName, aSegmentName)
             
             disp(['processing ', char(curr_marker.getName())]);
             
             % point coordinates
-            markerLocVec3 =  curr_marker.getOffset();
+            if getOpenSimVersion()<4.0 %OpenSim 3.3
+                markerLocVec3 =  curr_marker.getOffset();
+            else %OpenSim 4.x
+                markerLocVec3 =  curr_marker.get_location();
+            end
             
             % convert to Matlab var
             markerLocCoords = [markerLocVec3.get(0),markerLocVec3.get(1),markerLocVec3.get(2)];
@@ -52,7 +60,11 @@ for n_marker = 0:N_markers-1
             newOffset = Vec3(new_markerLocCoords(1), new_markerLocCoords(2), new_markerLocCoords(3));
             
             % setting the torsioned marker offset
-            curr_marker.setOffset(newOffset);
+            if getOpenSimVersion()<4.0 %OpenSim 3.3
+                curr_marker.setOffset(newOffset);
+            else %OpenSim 4.x
+                curr_marker.set_location(newOffset);
+            end
         end
 end
 
