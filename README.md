@@ -11,7 +11,7 @@
   - [Femoral anteversion](#femoral-anteversion)
   - [Femoral torsion](#femoral-torsion)
   - [Tibial torsion](#tibial-torsion)
-- [Future work](#future-work)
+- [Contributors](#contributors)
 
 # Bone deformation tool
 
@@ -142,6 +142,5 @@ bone_to_deform = 'tibia_l';
 
 ![distal_torsion](/images/tibial_torsion_example.png)
 
-# Future work
-
-* Upgrade scripts to openSim 4.x.
+# Contributors
+Many thanks to **Axel Koussou** and **Emmanuelle Renoul** from Fondation Ellen Poidatz (St-Fargeau-Ponthierry, France) for contributing to the tool upgrade to OpenSim 4.1.
