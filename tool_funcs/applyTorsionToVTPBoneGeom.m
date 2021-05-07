@@ -8,7 +8,10 @@
 function osimModel = applyTorsionToVTPBoneGeom(osimModel, bone_to_deform, torsionAxis, torsion_angle_func_rad, torsion_doc_string, OSGeometry_folder)
 
 % assign by default OpenSim 3.1 folder
-if nargin<6; OSGeometry_folder = 'C:\OpenSim 3.3\Geometry'; end
+if nargin<6
+    [~, osim_version_string] = getOpenSimVersion();
+    OSGeometry_folder = ['C:\OpenSim ',osim_version_string,'\Geometry'];
+end
 
 disp('--------------------------');
 disp(' ADJUSTING VTP GEOMETRIES ');
