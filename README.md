@@ -26,20 +26,22 @@ The tool is introduced and described in the following publication, which we invi
 @article{Modenese2021bonedef,
   title={Dependency of Lower Limb Joint Reaction Forces on Femoral Anteversion},
   author={Luca Modenese, Martina Barzan and Christopher P. Carty},
-  journal={BiorXiv preprint},
-  doi = {https://doi.org/10.1101/2021.02.22.432159},
+  journal={Gait & Posture},
+  doi = {https://doi.org/10.1016/j.gaitpost.2021.06.014},
   year={2021},
-  keywords = {Anteversion, Musculoskeletal modeling, Tibiofemoral contact force, Knee Loading, Femur, Walking}
+  keywords = {Femoral version, Femoral anteversion, Musculoskeletal modeling, Tibiofemoral contact force, Knee Loading, Femur, Walking}
 }
 ```
-The paper is available [as preprint](https://biorxiv.org/cgi/content/short/2021.02.22.432159v1), and all the materials used in that manuscript are available at [this repository](https://github.com/modenaxe/femoral_anteversion_paper).
+The paper is [open access](https://doi.org/10.1016/j.gaitpost.2021.06.014) and all the materials and scripts used in that manuscript are available at [this repository](https://github.com/modenaxe/femoral-anteversion-paper).
 
 # Requirements and setup
 
 In order to use the bone deformation tool you will need to:
-1. download [OpenSim 3.3](https://simtk.org/projects/opensim). Go to the `Download` page of the provided link and click on `Previous releases`, as shown in [this screenshot](https://github.com/modenaxe/3d-muscles/blob/master/images/get_osim3.3.PNG).
+1. download [OpenSim 3.3 or OpenSim 4.x](https://simtk.org/projects/opensim). The former is still available if you go to the `Download` page of the provided link and click on `Previous releases`, as shown in [this screenshot](https://github.com/modenaxe/3d-muscles/blob/master/images/get_osim3.3.PNG).
 2. have MATLAB installed in your machine. The development of the paper was done using R2020a.
-3. set up the OpenSim 3.3 API (Application User Interface) for MATLAB. Please refer to the OpenSim [documentation](https://simtk-confluence.stanford.edu/display/OpenSim/Scripting+with+Matlab).
+3. set up the OpenSim API (Application User Interface) for MATLAB. Please refer to the OpenSim [documentation](https://simtk-confluence.stanford.edu/display/OpenSim/Scripting+with+Matlab).
+
+The tool should be able to detect your installed OpenSim API version and maintained compatibility with OpenSim v3.3.
 
 # How to use the bone deformation tool
 
@@ -72,7 +74,7 @@ The formulation of the tool is however generic, so nothing prevents you from tes
 
 It is possible to modify the femoral anteversion of a generic model as in the figure below.
 
-If you want, for example, to generate a model with 40 degrees of femoral anteversion, you can apply a 28 degrees of torsion to the generic model, which we have estimated to have a femoral anteversion of 12 degrees.
+If you want, for example, to generate a model with 40 degrees of femoral anteversion, you can apply a 28 degrees of rotation to the generic model, which we have estimated to have a femoral anteversion of 12 degrees.
 
 The typical setting in the main script would then be:
 
@@ -90,11 +92,11 @@ bone_to_deform = 'femur_l';
 % axis of deformation
 torsionAxis = 'y';
 
-% define the torsion at the joint centre of the specified bone
+% define the rotation at the joint centre of the specified bone
 % TorsionProfilePointsDeg = [ proximalTorsion DistalTorsion ];
 TorsionProfilePointsDeg = [ 0  28 ];
 
-% decide if you want to apply torsion to joint as well as other objects.
+% decide if you want to apply the rotation to joint as well as other objects.
 apply_torsion_to_joints = 'no';
 ```
 
