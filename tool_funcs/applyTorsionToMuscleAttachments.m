@@ -27,6 +27,10 @@ Muscles = osimModel.getMuscles();
 N_mus = Muscles.getSize();
 processed_muscles = '';
 ntm = 1;
+
+% state now required
+state = osimModel.initSystem();
+
 % loop through the muscles
 for n_mus = 0:N_mus-1
     
@@ -60,7 +64,13 @@ for n_mus = 0:N_mus-1
                 ntm = ntm + 1;
             end
             % point coordinates
-            musAttachLocVec3 =  currentPathPointSet.get(n_p).getLocation();
+            % OpenSim 3.3
+            if getOpenSimVersion()<4.0 
+                musAttachLocVec3 =  currentPathPointSet.get(n_p).getLocation();
+            else
+                % OpenSim 4.x
+                musAttachLocVec3 =  currentPathPointSet.get(n_p).getLocation(state);
+            end
             
             % convert to Matlab var
             musAttachLocCoords = [musAttachLocVec3.get(0),musAttachLocVec3.get(1),musAttachLocVec3.get(2)];
@@ -71,10 +81,18 @@ for n_mus = 0:N_mus-1
             % compute new muscle attachment coordinates
             new_musAttachLocCoords = (TorsRotMat*musAttachLocCoords')';%musCoord * M'
             
-            % setting the muscle PathPointSet
-            currentPathPointSet.get(n_p).setLocationCoord(0,double(new_musAttachLocCoords(1)))
-            currentPathPointSet.get(n_p).setLocationCoord(1,double(new_musAttachLocCoords(2)))
-            currentPathPointSet.get(n_p).setLocationCoord(2,double(new_musAttachLocCoords(3)))
+            if getOpenSimVersion()<4.0 %OpenSim 3.3
+                currentPathPointSet.get(n_p).setLocationCoord(0,double(new_musAttachLocCoords(1)))
+                currentPathPointSet.get(n_p).setLocationCoord(1,double(new_musAttachLocCoords(2)))
+                currentPathPointSet.get(n_p).setLocationCoord(2,double(new_musAttachLocCoords(3)))
+            else %OpenSim 4.x
+                % getPathPoint returns an AbstractPathPointSet. Requires
+                % downcasting
+                currentPathPoint = PathPoint.safeDownCast(currentPathPointSet.get(n_p));
+                % setting the muscle PathPointSet as Vec3
+                new_musAttachLocCoords_v3 = Vec3(new_musAttachLocCoords(1), new_musAttachLocCoords(2), new_musAttachLocCoords(3));
+                currentPathPoint.set_location(new_musAttachLocCoords_v3);
+            end
         end
     end
 end

@@ -16,7 +16,13 @@ n_d = 1;
 for n_j = 0:N_j-1
     
     % get parent body name for each joint
-    jointParentName = char(modelJointSet.get(n_j).getParentBody().getName());
+    % OpenSim 3.3
+    if getOpenSimVersion()<4.0 
+        jointParentName = char(modelJointSet.get(n_j).getParentBody().getName());
+    else
+        % OpenSim 4.x
+        jointParentName = char(modelJointSet.get(n_j).getParentFrame().findBaseFrame().getName());
+    end
     
     % when matching with bodyName save name
     if strcmp(jointParentName, bodyName)
