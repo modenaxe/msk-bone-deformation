@@ -15,10 +15,10 @@ try
     os_version = char(opensimCommonJNI.GetVersion());
     
     % get the field separators, e.g. '-
-    sep_set = strfind(os_version, '-');
+    % sep_set = strfind(os_version, '-');
     
     % use the last file separator to get the OpenSim installation folder name
-    version = os_version(1:sep_set(1));
+    version = os_version(1:3);
     
     % get the string for the opensim version
     osim_version_string = strtrim(strrep(lower(version),'opensim', ''));
