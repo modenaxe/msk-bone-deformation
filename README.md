@@ -37,11 +37,11 @@ The paper is [open access](https://doi.org/10.1016/j.gaitpost.2021.06.014) and a
 # Requirements and setup
 
 In order to use the bone deformation tool you will need to:
-1. download [OpenSim 3.3 or OpenSim 4.x](https://simtk.org/projects/opensim). The former is still available if you go to the `Download` page of the provided link and click on `Previous releases`, as shown in [this screenshot](https://github.com/modenaxe/3d-muscles/blob/master/images/get_osim3.3.PNG).
+1. download [OpenSim 4.1](https://simtk.org/projects/opensim) or more recent. OpenSim 3.3 is also supported (still available if you go to the `Download` page of the provided link and click on `Previous releases`, as shown in [this screenshot](https://github.com/modenaxe/3d-muscles/blob/master/images/get_osim3.3.PNG)).
 2. have MATLAB installed in your machine. The development of the paper was done using R2020a.
 3. set up the OpenSim API (Application User Interface) for MATLAB. Please refer to the OpenSim [documentation](https://simtk-confluence.stanford.edu/display/OpenSim/Scripting+with+Matlab).
 
-The tool should be able to detect your installed OpenSim API version and maintained compatibility with OpenSim v3.3.
+The tool should be able to detect the version of your installed OpenSim API automatically.
 
 # How to use the bone deformation tool
 
@@ -68,7 +68,7 @@ The bone deformation tool will execute the following operations:
 
 We tested the MATLAB tool with two lower limb models for now: the `gait2392` model distributed with OpenSim and the full-body model published by [Rajagopal et al. (2016)](https://doi.org/10.1109/tbme.2016.2586891). The latter model was used in the publication associated with this repository and to produce the images in this document.
 
-The formulation of the tool is however generic, so nothing prevents you from testing it on other bones and models.
+The formulation of the tool is however completely generic, so nothing prevents you from testing it on other bones and models, including upper limb models.
 
 ## Femoral anteversion
 
