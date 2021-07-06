@@ -56,13 +56,14 @@ for n_mus = 0:N_mus-1
         
         if strcmp(attachBodyName, aSegmentName)
             
-%             disp(['processing', char(curr_Mus.getName())]);
+%              disp(['processing ', char(curr_Mus.getName())]);
             
             % keep track 
             if max(strcmp(char(curr_Mus.getName()), processed_muscles))==0
                 processed_muscles{ntm} = char(curr_Mus.getName());
                 ntm = ntm + 1;
             end
+            
             % point coordinates
             % OpenSim 3.3
             if getOpenSimVersion()<4.0 
@@ -72,26 +73,71 @@ for n_mus = 0:N_mus-1
                 musAttachLocVec3 =  currentPathPointSet.get(n_p).getLocation(state);
             end
             
-            % convert to Matlab var
-            musAttachLocCoords = [musAttachLocVec3.get(0),musAttachLocVec3.get(1),musAttachLocVec3.get(2)];
+            curr_pathpoint_class  = char(currentPathPointSet.get(n_p).getConcreteClassName());
             
-            % compute torsion metric for the attachment point
-            TorsRotMat = RotMat(torsion_angle_func_rad(musAttachLocCoords(axis_ind)));
-            
-            % compute new muscle attachment coordinates
-            new_musAttachLocCoords = (TorsRotMat*musAttachLocCoords')';%musCoord * M'
-            
-            if getOpenSimVersion()<4.0 %OpenSim 3.3
-                currentPathPointSet.get(n_p).setLocationCoord(0,double(new_musAttachLocCoords(1)))
-                currentPathPointSet.get(n_p).setLocationCoord(1,double(new_musAttachLocCoords(2)))
-                currentPathPointSet.get(n_p).setLocationCoord(2,double(new_musAttachLocCoords(3)))
-            else %OpenSim 4.x
-                % getPathPoint returns an AbstractPathPointSet. Requires
-                % downcasting
-                currentPathPoint = PathPoint.safeDownCast(currentPathPointSet.get(n_p));
-                % setting the muscle PathPointSet as Vec3
-                new_musAttachLocCoords_v3 = Vec3(new_musAttachLocCoords(1), new_musAttachLocCoords(2), new_musAttachLocCoords(3));
-                currentPathPoint.set_location(new_musAttachLocCoords_v3);
+            if strcmp(curr_pathpoint_class, 'PathPoint') || strcmp(curr_pathpoint_class, 'ConditionalPathPoint')
+                
+                % convert to Matlab var
+                musAttachLocCoords = [musAttachLocVec3.get(0),musAttachLocVec3.get(1),musAttachLocVec3.get(2)];
+                
+                % compute torsion metric for the attachment point
+                TorsRotMat = RotMat(torsion_angle_func_rad(musAttachLocCoords(axis_ind)));
+                
+                % compute new muscle attachment coordinates
+                new_musAttachLocCoords = (TorsRotMat*musAttachLocCoords')';%musCoord * M'
+                
+                if getOpenSimVersion()<4.0 %OpenSim 3.3
+                    currentPathPointSet.get(n_p).setLocationCoord(0,double(new_musAttachLocCoords(1)))
+                    currentPathPointSet.get(n_p).setLocationCoord(1,double(new_musAttachLocCoords(2)))
+                    currentPathPointSet.get(n_p).setLocationCoord(2,double(new_musAttachLocCoords(3)))
+                else %OpenSim 4.x
+                    % getPathPoint returns an AbstractPathPointSet. Requires
+                    % downcasting
+                    eval(['currentPathPoint = ',curr_pathpoint_class,'.safeDownCast(currentPathPointSet.get(n_p));'])
+                    % setting the muscle PathPointSet as Vec3
+                    new_musAttachLocCoords_v3 = Vec3(new_musAttachLocCoords(1), new_musAttachLocCoords(2), new_musAttachLocCoords(3));
+                    currentPathPoint.set_location(new_musAttachLocCoords_v3);
+                end
+            elseif  strcmp(curr_pathpoint_class, 'MovingPathPoint')
+                
+                currentPathPoint = MovingPathPoint.safeDownCast(currentPathPointSet.get(n_p));
+                %disp('Function on MovingPathPoint not supported. Please extend the bone deformation tool.')
+                %continue
+                
+                % extract the pqthpoints
+                px = currentPathPoint.get_x_location();
+                py = currentPathPoint.get_y_location();
+                pz = currentPathPoint.get_z_location();
+                
+                % extract functions
+                fx = SimmSpline.safeDownCast(px);
+                fy = SimmSpline.safeDownCast(py);
+                fz = SimmSpline.safeDownCast(pz);
+                coord_set = {'x','y','z'};
+                
+                for nc=1:3
+                    cur_coord = coord_set{nc};
+                    % extract joint angles (x) from coordinate of interest
+                    eval(['Np = f',cur_coord,'.getX.getSize();']);
+                    eval(['Xpoints = f',cur_coord,'.getX();']);
+                    
+                    for np=0:Np-1
+                        % curr joint angle
+                        cur_angle = Xpoints.get(np);
+                        % compute point coordinates at that joint angle
+                        Px = fx.calcValue(Vector(1,cur_angle));
+                        Py = fy.calcValue(Vector(1,cur_angle));
+                        Pz = fz.calcValue(Vector(1,cur_angle));
+                        % build a point
+                        musAttachLocCoords = [Px, Py, Pz];
+                        % compute torsion metric for the attachment point
+                        TorsRotMat = RotMat(torsion_angle_func_rad(musAttachLocCoords(axis_ind)));
+                        % compute new muscle attachment coordinates
+                        new_musAttachLocCoords = (TorsRotMat*musAttachLocCoords')';%musCoord * M'
+                        % assign to spline
+                        eval(['f',cur_coord,'.setY(np, new_musAttachLocCoords(nc));']);
+                    end
+                end
             end
         end
     end
