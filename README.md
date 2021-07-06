@@ -7,11 +7,13 @@
 - [Requirements and setup](#requirements-and-setup)
 - [How to use the bone deformation tool](#how-to-use-the-bone-deformation-tool)
 - [How the bone deformation tool works](#how-the-bone-deformation-tool-works)
+- [Which models can I deform with this MATLAB tool?](#which-models-can-i-deform-with-this-matlab-tool)
 - [Examples of use](#examples-of-use)
-  - [Which models can I deform with this MATLAB tool?](#which-models-can-i-deform-with-this-matlab-tool)
   - [Femoral anteversion](#femoral-anteversion)
   - [Femoral torsion](#femoral-torsion)
   - [Tibial torsion](#tibial-torsion)
+- [Provided example scripts](#provided-example-scripts)
+- [How to contribute](#how-to-contribute)
 - [Contributors](#contributors)
 
 # Bone deformation tool
@@ -37,15 +39,15 @@ The paper is [open access](https://doi.org/10.1016/j.gaitpost.2021.06.014) and a
 # Requirements and setup
 
 In order to use the bone deformation tool you will need to:
-1. download [OpenSim 4.1](https://simtk.org/projects/opensim) or more recent. OpenSim 3.3 is also supported (still available if you go to the `Download` page of the provided link and click on `Previous releases`, as shown in [this screenshot](https://github.com/modenaxe/3d-muscles/blob/master/images/get_osim3.3.PNG)).
+1. download [OpenSim 4.1](https://simtk.org/projects/opensim) or more recent. OpenSim 3.3 is also supported but the examples refer to the latest version.
 2. have MATLAB installed in your machine. The development of the paper was done using R2020a.
 3. set up the OpenSim API (Application User Interface) for MATLAB. Please refer to the OpenSim [documentation](https://simtk-confluence.stanford.edu/display/OpenSim/Scripting+with+Matlab).
 
-The tool should be able to detect the version of your installed OpenSim API automatically.
+The tool should be able to detect the version of your installed OpenSim API automatically, so you do not have to modify anything related to this toolbox if you are using OpenSim 3.3.
 
 # How to use the bone deformation tool
 
-In order to run the bone deformation tool you will need to specify:
+In order to run the bone deformation tool you will need to specify variable in the example scripts, or in your own scripts:
 1. where the OpenSim bone geometries are stored (variable `OpenSim_Geometry_folder`)
 2. which segment of the OpenSim model you want to deform (variable `bone_to_deform`)
 3. along which axis the torsional profile will be applied(variable `torsionAxis`)
@@ -56,19 +58,22 @@ In order to run the bone deformation tool you will need to specify:
 # How the bone deformation tool works
 
 The bone deformation tool will execute the following operations:
-1. modify the bone geometry described in the OpenSim `vtp` file according to the specified linear torsional profile
-2. generate a new bone geometry in `vtp` format
-3. adjust all the muscle attachments and virtual markers attached to the bone
-4. rotate the joints according to the specified torsional profile if the user decides to do that (see examples below). 
-5. generate a new model that includes all the previous modifications.
+1. read and modify the bone geometry described in the OpenSim `vtp` file according to the specified rotational profile
+2. generate a new bone geometry in `vtp` format and save it in the same folder
+3. adjust all the muscle attachments and virtual markers attached to the bone of interest
+4. rotate the joints axes according to the specified torsional profile if the user decides to do that (see examples below). This will modify the kinematic model.
+5. generate a new OpenSim model that includes all the previous modifications.
+
+# Which models can I deform with this MATLAB tool?
+
+We tested the MATLAB tool with two popular lower limb models: 
+* the `gait2392` model distributed with OpenSim 
+* the `Rajagopal full-body model` published by [Rajagopal et al. (2016)](https://doi.org/10.1109/tbme.2016.2586891). 
+The latter model was used in the publication associated with this repository and to produce the images in this document.
+
+Please consider that the formulation of the tool is however **completely generic** in its managing the OpenSim model components, so nothing prevents you from testing it on other bones and models, including upper limb models.
 
 # Examples of use
-
-## Which models can I deform with this MATLAB tool?
-
-We tested the MATLAB tool with two lower limb models for now: the `gait2392` model distributed with OpenSim and the full-body model published by [Rajagopal et al. (2016)](https://doi.org/10.1109/tbme.2016.2586891). The latter model was used in the publication associated with this repository and to produce the images in this document.
-
-The formulation of the tool is however completely generic, so nothing prevents you from testing it on other bones and models, including upper limb models.
 
 ## Femoral anteversion
 
@@ -145,5 +150,22 @@ bone_to_deform = 'tibia_l';
 
 ![distal_torsion](/images/tibial_torsion_example.png)
 
+# Provided example scripts
+
+We have provided example scripts that demonstrate how to modify the geometry of femur and tibia in the gait2392 and Rajagopal models:
+* [`Example_deform_distal_femur_gait2392.m`](Example_deform_distal_femur_gait2392.m)
+* [`Example_deform_distal_femur_Rajagopal.m`](Example_deform_distal_femur_Rajagopal.m)
+* [`Example_deform_distal_tibia_gait2392.m`](Example_deform_distal_tibia_gait2392.m)
+* [`Example_deform_distal_tibia_Rajagopal.m`](Example_deform_distal_tibia_Rajagopal.m)
+
+The models resulting from these scripts are available in the [`examples'](./examples) folder.
+
+# How to contribute
+We welcome any contribution from the biomechanical and open source community, in any form. Few tips for contributing:
+
+* To report a bug, or anomalous behaviour of the toolbox, please open an issue on this page. Ideally, if you could make the issue reproducile with some data that you can share with us.
+* To contributing to the project with new code please use a standard GitHub workflow: a) fork this repository, b) create your own branch, where you make your modifications and improvements, c)  once you are happy with the new feature that you have implemented you can create a pull request. We will review your code and potentially include it in the main repository.
+* To propose feature requests, please open an issue [on this page](https://github.com/modenaxe/msk-bone-deformation/issues), label it as feature request using the Labels panel on the right and describe your desired new feature. We will review the proposal regularly but work on them depending on the planned development.
+
 # Contributors
-Many thanks to **Axel Koussou** and **Emmanuelle Renoul** from Fondation Ellen Poidatz (St-Fargeau-Ponthierry, France) for contributing to the tool upgrade to OpenSim 4.1.
+Many thanks to **Axel Koussou** and **Emmanuelle Renoul** from Fondation Ellen Poidatz (St-Fargeau-Ponthierry, France) for helping with the tool upgrade to OpenSim 4.1.
