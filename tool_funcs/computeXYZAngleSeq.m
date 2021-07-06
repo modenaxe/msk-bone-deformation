@@ -13,8 +13,8 @@
 %       joint orientation. Sequence of rotation is X-Y-Z.
 %
 %-------------------------------------------------------------------------%
-%  Author:   Luca Modenese, 2020
-%  Copyright 2020 Luca Modenese
+%  Author:   Luca Modenese, 2021
+%  Copyright 2021 Luca Modenese
 %-------------------------------------------------------------------------%
 %
 % FUNCTION FROM msk-STAPLE toolbox.
