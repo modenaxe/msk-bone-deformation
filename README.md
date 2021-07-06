@@ -34,7 +34,8 @@ The tool is introduced and described in the following publication, which we invi
   keywords = {Femoral version, Femoral anteversion, Musculoskeletal modeling, Tibiofemoral contact force, Knee Loading, Femur, Walking}
 }
 ```
-The paper is [open access](https://doi.org/10.1016/j.gaitpost.2021.06.014) and all the materials and scripts used in that manuscript are available at [this repository](https://github.com/modenaxe/femoral-anteversion-paper).
+The [paper is open access](https://doi.org/10.1016/j.gaitpost.2021.06.014) and all the materials and scripts used for that manuscript are available at [this repository](https://github.com/modenaxe/femoral-anteversion-paper). 
+Please note that version of the tool used in the reproducibility repository is [v0.1](https://github.com/modenaxe/msk-bone-deformation/releases/tag/v0.1), while the latest version is always recommended for new users.
 
 # Requirements and setup
 
@@ -158,7 +159,7 @@ We have provided example scripts that demonstrate how to modify the geometry of 
 * [`Example_deform_distal_tibia_gait2392.m`](Example_deform_distal_tibia_gait2392.m)
 * [`Example_deform_distal_tibia_Rajagopal.m`](Example_deform_distal_tibia_Rajagopal.m)
 
-The models resulting from these scripts are available in the [`examples'](./examples) folder.
+The models resulting from these scripts, together with the bone geometries for visualizing the Rajagopal model, are available in the [`examples'](./examples) folder.
 
 # How to contribute
 We welcome any contribution from the biomechanical and open source community, in any form. Few tips for contributing:
