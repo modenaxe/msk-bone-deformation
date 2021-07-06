@@ -21,15 +21,15 @@ bone_to_deform = 'tibia_l';
 % axis of deformatio
 torsionAxis = 'y';
 
-% define the torsion at the joint centre of the specified bone
-% TorsionProfilePointsDeg = [ proximalTorsion DistalTorsion ];
+% define the rotational profile at the joint centres of the bone of
+% interest: TorsionProfilePointsDeg = [ proximalTorsion DistalTorsion ];
 TorsionProfilePointsDeg = [ 0  -30 ];
 
 % decide if you want to apply torsion to joint as well as other objects.
 % E.g. choose no for investigating the effect of femoral anteversion in a
-% leg with regular alignment.
+% leg with straight alignment.
 % Choose yes for modelling a CP child with deformation of bone resulting in
-% joint rotation.
+% joint rotation, meaning the kinematic model is altered.
 apply_torsion_to_joints = 'yes';
 
 % where the deformed models will be saved
@@ -67,8 +67,7 @@ if getOpenSimVersion()<4.0
     % loop through wrapping surf
     for nw = 0:N_wrap-1
         cur_obj = wos.get(nw);
-        
-        
+
         % compute new orientation
         orientation = obj.get_xyz_body_rotation();
         XYZ_orient_vec = [orientation.get(0), orientation.get(1), orientation.get(2)];

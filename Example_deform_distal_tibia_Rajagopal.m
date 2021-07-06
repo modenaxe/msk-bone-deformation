@@ -29,9 +29,9 @@ TorsionProfilePointsDeg = [ 0  -30 ];
 
 % decide if you want to apply torsion to joint as well as other objects.
 % E.g. choose no for investigating the effect of femoral anteversion in a
-% leg with regular alignment.
+% leg with straight alignment.
 % Choose yes for modelling a CP child with deformation of bone resulting in
-% joint rotation.
+% joint rotation, meaning the kinematic model is altered.
 apply_torsion_to_joints = 'yes';
 
 % where the deformed models will be saved
