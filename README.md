@@ -13,6 +13,7 @@
   - [Femoral torsion](#femoral-torsion)
   - [Tibial torsion](#tibial-torsion)
 - [Provided example scripts](#provided-example-scripts)
+- [Video summary of the associated publication](#video-summary-of-the-associated-publication)
 - [How to contribute](#how-to-contribute)
 - [Contributors](#contributors)
 
@@ -160,6 +161,13 @@ We have provided example scripts that demonstrate how to modify the geometry of 
 * [`Example_deform_distal_tibia_Rajagopal.m`](Example_deform_distal_tibia_Rajagopal.m)
 
 The models resulting from these scripts, together with the bone geometries for visualizing the Rajagopal model, are available in the [`examples'](./examples) folder.
+
+# Video summary of the associated publication
+
+Luca gave a talk at the [26th Congress of the European Society of Biomechanics](https://bit.ly/3yU6EwB) presenting the paper associated with the bone deformation tool. Click on the image below to see the recorded:
+
+[![Alt text](images/ESB2021_youtube_thumbnail.png)](https://www.youtube.com/watch?v=jq2S2tRGsm0)
+
 
 # How to contribute
 We welcome any contribution from the biomechanical and open source community, in any form. Few tips for contributing:
