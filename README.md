@@ -8,6 +8,8 @@
 - [How to use the bone deformation tool](#how-to-use-the-bone-deformation-tool)
 - [How the bone deformation tool works](#how-the-bone-deformation-tool-works)
 - [Which models can I deform with this MATLAB tool?](#which-models-can-i-deform-with-this-matlab-tool)
+- [Definition of femoral version and tibial torsion angles](#definition-of-femoral-version-and-tibial-torsion-angles)
+  - [Baseline angles for the Rajagopal full body model](#baseline-angles-for-the-rajagopal-full-body-model)
 - [Examples of use](#examples-of-use)
   - [Femoral anteversion](#femoral-anteversion)
   - [Femoral torsion](#femoral-torsion)
@@ -76,6 +78,24 @@ We tested the MATLAB tool with two popular lower limb models:
 The latter model was used in the publication associated with this repository and to produce the images in this document.
 
 Please consider that the formulation of the tool is however **completely generic** in its managing the OpenSim model components, so nothing prevents you from testing it on other bones and models, including upper limb models.
+
+# Definition of femoral version and tibial torsion angles
+
+The generic OpenSim model are provided with bone geometry for visualization purposes, and it is possible to estimate the femoral version and tibial rotation using their geometry. We have estimated the following angles as in [Strecker et al. (1997)](https://online.boneandjoint.org.uk/doi/abs/10.1302/0301-620X.79B6.0791019)
+
+![alignment-angles](/images/angle-measurements.png)
+
+## Baseline angles for the Rajagopal full body model
+
+For the full-body model by Rajagopal et al. we found:
+* femoral version: `12 degrees`
+* tibial rotation: `28 degrees`
+
+The reference systems that we constructed for the estimation of these angles are available in the folder [baseline-angles-estimation-Rajagopal](baseline-angles-estimation-Rajagopal) and can be visualized using [NMSBuilder](http://www.nmsbuilder.org/).
+
+**WARNING** the bone geometries provided with the OpenSim models are normally of low quality, not comparable with those obtainable from segmentation of CT scans, for example. Estimation of these rotational angle is therefore challenging.
+
+Knowledge of the bone rotation for the baseline model is essential because the bone deformation prescribed with this deformation tool will be added to the existing bone rotation.
 
 # Examples of use
 
@@ -151,6 +171,7 @@ Exactly the same setting can be used for applying a distal tibial torsion, with 
 bone_to_deform = 'tibia_l';
 ```
 
+The resulting tibial torsion will be 2 degrees.
 
 ![distal_torsion](/images/tibial_torsion_example.png)
 
