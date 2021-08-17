@@ -103,7 +103,7 @@ Knowledge of the bone rotation for the baseline model is essential because the b
 
 It is possible to modify the femoral anteversion of a generic model as in the figure below.
 
-If you want, for example, to generate a model with 40 degrees of femoral anteversion, you can apply a 28 degrees of rotation to the generic model, which we have estimated to have a femoral anteversion of 12 degrees.
+If you want, for example, to generate a model with 40 degrees of femoral anteversion, you can apply a 28 degrees of rotation to the proximal femur of generic model, which we have estimated to have a baseline femoral anteversion of 12 degrees.
 
 The typical setting in the main script would then be:
 
@@ -123,7 +123,7 @@ torsionAxis = 'y';
 
 % define the rotation at the joint centre of the specified bone
 % TorsionProfilePointsDeg = [ proximalTorsion DistalTorsion ];
-TorsionProfilePointsDeg = [ 0  28 ];
+TorsionProfilePointsDeg = [ 28  0 ];
 
 % decide if you want to apply the rotation to joint as well as other objects.
 apply_torsion_to_joints = 'no';
