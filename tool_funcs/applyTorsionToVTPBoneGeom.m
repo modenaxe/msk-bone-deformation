@@ -48,7 +48,13 @@ for n_vtp = 1:size(vtpNameSet,2)
     
     % Deforms points and normals
     disp('   - applying torsion to points and normals');
-    for n = 1:size(points,1)
+	
+	% initialize (required for multiple vtp vones)
+	% thanks to Axel Koussou!
+	new_points=[]; 
+	new_normals=[];
+    
+	for n = 1:size(points,1)
         % compute torsion matrix
         TorsRotMat = RotMat(torsion_angle_func_rad(points(n,axis_ind)));
         
