@@ -1,4 +1,5 @@
 %-------------------------------------------------------------------------%
+%    Copyright (c) 2021 Axel Kousshou                                      %
 %    Author:   Axel Kousshou,  2021                                       %
 % ----------------------------------------------------------------------- %
 
@@ -24,9 +25,8 @@ cur_body = osimModel.getBodySet().get(aSegmentName);
 % wrapping surfaces size
 N_wrap_surfaces = cur_body.getWrapObjectSet.getSize();
 
-% state now required
-state = osimModel.initSystem();
-
+% % state now required
+% state = osimModel.initSystem();
 
 ntm = 1;
 processed_wrap_surfaces='';
