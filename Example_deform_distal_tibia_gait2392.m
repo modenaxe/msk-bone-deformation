@@ -10,10 +10,10 @@ import org.opensim.modeling.*
 
 %---------------  MAIN SETTINGS -----------
 % Model to deform
-modelFileName = './examples/gait2392_simbody.osim';
+modelFileName = './examples_gait2392/gait2392_simbody.osim';
 
 % where the bone geometries are stored
-OpenSim_Geometry_folder = 'C:\OpenSim 4.2\Geometry';
+OpenSim_Geometry_folder = 'C:\OpenSim 4.3\Geometry';
 
 % body to deform
 bone_to_deform = 'tibia_l';
@@ -33,7 +33,7 @@ TorsionProfilePointsDeg = [ 0  -30 ];
 apply_torsion_to_joints = 'yes';
 
 % where the deformed models will be saved
-altered_models_folder = './examples';
+altered_models_folder = './examples_gait2392';
 %----------------------------------------------
 
 % import model
