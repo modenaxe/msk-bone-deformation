@@ -1,5 +1,5 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5075982.svg)](https://doi.org/10.5281/zenodo.5075982)
-![visitors](https://visitor-badge.glitch.me/badge?page_id=modenaxe.msk_bone_deformation)<!-- omit in toc -->
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=modenaxe.msk_bone_deformation)<!-- omit in toc -->
 
 # Table of contents <!-- omit in toc -->
 
