@@ -1,7 +1,7 @@
 %-------------------------------------------------------------------------%
-%    Copyright (c) 2021 Modenese L.                                       %
+%    Copyright (c) 2025 Modenese L.                                       %
 %    Author:   Luca Modenese,  2021                                       %
-%    email:    l.modenese@imperial.ac.uk                                  %
+%    email:    l.modenese@unsw.edu.au                                     %
 % ----------------------------------------------------------------------- %
 clear;clc
 addpath('./tool_funcs')

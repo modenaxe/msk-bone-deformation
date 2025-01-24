@@ -1,7 +1,7 @@
 %-------------------------------------------------------------------------%
-%    Copyright (c) 2021 Modenese L.                                       %
+%    Copyright (c) 2025 Modenese L.                                       %
 %    Author:   Luca Modenese,  2021                                       %
-%    email:    l.modenese@imperial.ac.uk                                  %
+%    email:    l.modenese@unsw.edu.au                                     %
 % ----------------------------------------------------------------------- %
 clear;clc
 addpath('./tool_funcs')
@@ -13,7 +13,7 @@ import org.opensim.modeling.*
 modelFileName = './examples_gait2392/gait2392_simbody.osim';
 
 % where the bone geometries are stored
-OpenSim_Geometry_folder = 'C:\OpenSim 4.3\Geometry';
+OpenSim_Geometry_folder = 'C:\OpenSim 4.5\Geometry';
 
 % body to deform
 bone_to_deform = 'femur_r';
